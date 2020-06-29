@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+   
+   <!--Head Section of the webpage-->
+   
+    <head>
+     
+      <!-- Including leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+    
+    <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.3.3/dist/esri-leaflet.js"
+  integrity="sha512-cMQ5e58BDuu1pr9BQ/eGRn6HaR6Olh0ofcHFWe5XesdCITVuSBiBZZbhCijBe5ya238f/zMMRYIMIIg1jxv4sQ=="
+  crossorigin=""></script>
+
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+ 
+ 
+<!-- Load Leaflet MarkerCluster and Esri Leaflet Cluster from CDN -->
+  <link rel="stylesheet" type="text/css"
+    href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
+    integrity="sha512-BBToHPBStgMiw0lD4AtkRIZmdndhB6aQbXpX7omcrXeG2PauGBl2lzq2xUZTxaLxYz5IDHlmneCZ1IJ+P3kYtQ=="
+    crossorigin="">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
+    integrity="sha512-RLEjtaFGdC4iQMJDbMzim/dOvAu+8Qp9sw7QE4wIMYcg2goVoivzwgSZq9CsIxp4xKAZPKh5J2f2lOko2Ze6FQ=="
+    crossorigin="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.71.1/dist/L.Control.Locate.min.css" />
+ 
+<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.71.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"
+    integrity="sha512-MQlyPV+ol2lp4KodaU/Xmrn+txc1TP15pOBF/2Sfre7MRsA/pB4Vy58bEqe9u7a7DczMLtU5wT8n7OblJepKbg=="
+    crossorigin=""></script>
+  <script src="https://unpkg.com/esri-leaflet-cluster@2.0.1/dist/esri-leaflet-cluster.js"
+    integrity="sha512-2/Nwrks+A2omjKeWrF4TKFLIrUbAhSl8EDEm6xunuwXXYqMoJI71PZtlW0/vqt9d3DOyP1md/bzAnNH2KuAhaQ=="
+    crossorigin=""></script>
+   <script type="text/javascript" src="src/leaflet-search-master/src/leaflet-search.js">
+    </script>
+   <link rel="stylesheet" href="src/leaflet-search-master/src/leaflet-search.css">
+   
+    <!--Insert chart here -->   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.14.3/dist/xlsx.full.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+    
+ <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-8twnXcrOGP3WfMvjB0jS5pNigFuIWj4ALwWEgxhZ+mxvjF5/FBPVd5uAxqT8dd2kUmTVK9+yQJ4CmTmSg/sXAQ=="
+    crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script scr="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"></script>
+    <script scr="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    
+   
+     
+      <title> Template</title>
+       <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        
+        
+        <style>
+            
+        .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: DodgerBlue;
+        }
+
+        .flex-container > div {
+  background-color: #f1f1f1;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+            
+        /* Style Header*/
+            header{
+                background-color: black;
+                padding: 10px;
+                text-align: center;
+                font-size: 35px;
+                color: aliceblue;
+                height: 40vx;
+                
+            }
+            
+   
+            a.padding{
+                padding-right: 50px;
+                font-size: 20px;
+            }
+            
+            /* Style the footer */
+            footer {
+            background-color: #777;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            }
+            
+        #mapid {height:90vh;}
+
+      .graph:-ms-fullscreen {
+        height: 100%;
+      }
+      .graph:fullscreen {
+        height: 100%;
+      }
+            #graph{
+                overflow: scroll;
+            }
+            
+            #slidecontainer{
+                height: 10vh;
+                
+                outline-width: thin;
+                outline-color:crimson;
+                background-color:cadetblue;
+                outline-style: hidden;
+                width: 100%;
+            }
+            
+            
+      .data-numbers:-webkit-full-screen {
+        height: 100%;
+        margin: 0;
+      }
+      .Data-Numbers:-ms-fullscreen {
+        height: 100%;
+      }
+      .Data-Numbers:fullscreen {
+        height: 100%;
+      }
+            
+            #slidecontainer{
+                height: 10vh;
+                padding: 10px;
+                outline-width: thin;
+                outline-color:crimson;
+                background-color:cadetblue;
+                outline-style: hidden;
+                width: 100%;
+            }
+            
+            
+
+            #graph{
+                height: 45vh;
+                padding: 10px;
+                outline-style:hidden;
+                outline-color: brown;
+                background-color: beige;
+            }
+            #Data-Numbers{
+                height: 30vh;
+                padding: 10px;
+                outline-style: hidden;
+                background-color: cadetblue;
+                overflow: visible;
+            }
+            
+            
+
+            
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line, 
+.axis1 path,
+.axis1 line {
+  fill: none;
+  stroke: #E6E7E8;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path, .x.axis1 path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.legend-box {
+  cursor: pointer;  
+}
+
+#mouse-tracker {
+  stroke: #E6E7E8;
+  stroke-width: 1px;
+}
+
+.hover-line { 
+  stroke: #E6E7E8;
+  fill: none;
+  stroke-width: 1px;
+  left: 10px;
+  shape-rendering: crispEdges;
+  opacity: 1e-6;
+}
+
+.hover-text {
+  stroke: none;
+  font-size: 30px;
+  font-weight: bold;
+  fill: #000000;
+}
+
+.tooltip {
+  font-weight: normal;
+}
+
+.brush .extent {
+  stroke: #FFF;
+  shape-rendering: crispEdges;
+}
+
+
+  </style>
+        
+        
+    </head>
+    
+    
+    <!-- Body web page -->
+    <body>
+              
+              <script src ="data/las_cruces.json"></script>
+              <script src ="data/USGS_Surface_Water_Sub_Basins.json"></script> 
+              <script src = "data/data_counties.json"></script>
+              <script src = "data/Water_Planning_Regions.json"></script>  
+              <script src = "data/new_mexico_bnd.json"></script> 
+              <script src = "data/OSE_Declared_Groundwater_Basins.json"></script>
+              <script src="https://d3js.org/d3.v3.js"></script>
+                   
+        <!--Header-->       
+        <header>
+         <h1 > State Wide Water Assessment</h1>  
+        </header>
+        
+    <div id="Spatial-Unit">
+         
+          <a href="#" class ="padding" onclick="myFunction2()">State</a>
+          <a href ="#" class="padding"onclick="myFunction4()"> Basins </a>
+          <a href="#" class="padding" onclick="myFunction3()">Water Planning Regions</a>
+          <a href="#" class="padding" onclick="myFunction()">Counties</a> 
+          
+             </div>
+    <div class="row">
+     <div id ="mapid" class="col-md-6"></div>
+     <div id = "dataviz" class ="col-md-6">
+         <div id = "graph" class = "row-md-16"><button onclick="activateFullscreen(document.getElementById('graph'))">Fullscreen</button><select id="selectbox"> 
+	            <option value="_1">Historic</option>
+	            <option value="_2">Future</option>
+             </select>
+         <h3> Flux Output</h3>
+         <svg id="chart1"  width="1000" height="650"  ></svg><br>
+         <h3> Water Use</h3>
+         <svg id="chart2" width="1000" height="650"  ></svg>
+
+         </div>  <br>
+         
+         <div id = "Data-Numbers" class = row-md-6><button onclick="activateFullscreen(document.getElementById('Data-Numbers'))">Fullscreen</button>
+           Precipitation – Rain, snow, sleet, or hail that falls to the ground. Historical: Based on monthly PRISM data (Prism Climate Group, 2016) and aggregated for every MBAU. Future: Estimated from one of the four climate change models. <br>
+           Land Surface Evapotranspiration – Evapotranspiration (ET) from the land surface. Historical and Future: Because changes in water storage in the land surface stock are ignored, land surface ET is calculated by setting ET equal to precipitation less surface water runoff and recharge.
+Runoff – Precipitation that flows into the surface water system. Historical: Calculated as part of a closure term for the surface water system. Future: Calculated as a percentage of precipitation that is based on historical ratios of monthly precipitation and calculated runoff.
+Recharge – The portion of precipitation that percolates into groundwater storage. Historical: Calculated as part of a closure term for the surface water system. Future: Calculated by multiplying the future precipitation estimates by the historical based ratio of precipitation to recharge. 
+Surface Water In / Surface Water Out – Surface water flows (e.g., river) that cross the boundary of a given MBAU. Historical: Primarily based on USGS stream gage data. Future: Estimates are largely affected by the climate change models. Surface water in and outflows are dependent on geographic location, where the outflow for a given MBAU becomes the inflow for the next MBAU that is immediately downstream.
+Groundwater In / Groundwater Out  – Subsurface groundwater flow between MBAUs. Historical and Future: In the NMDSWB, groundwater flows between basins are largely unknown, and assumed to be zero at all MBAUs in order to calculate changes in groundwater storage.
+
+            
+            Data here
+         </div>
+         </div>  
+          </div>
+         
+        <script src="webmaps.js"></script>
+        <script type="text/javascript" src = "js/trial.js"></script>
+    
+       
+             
+          
+
+    </body>
+</html>
