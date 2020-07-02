@@ -11,3 +11,8 @@ The CSV files acquired are Classified as Historic and Future data based on the s
 There is also a Tableau Version of the model at NMWRRI website.
 
 -- Work in Progress--
+
+index.html - Main file that calls D3
+Webmaps.js that deals with spatial units and json files for adding spatial units
+trail.js is the d3 js library that displays multiline chart 
+

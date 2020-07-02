@@ -90,7 +90,7 @@ d3.csv(url, function(error, data) {
   var categories = color.domain().map(function(name) { // Nest the data into an array of objects with new keys
 
     return {
-      name: name, // "name": the csv headers except date
+      name: name.replace(/SW_R/g, "SurfaceWater Returns").replace(/SW_D/g, "SurfaceWater Diversion").replace(/GW_D/g, "GroundWater Diversion").replace(/SW_W/g, "SurfaceWater").replace(/GW_W/g, "GroundWater").replace(/SW/g, "SurfaceWater").replace(/GW/g, "GroundWater").replace(/ET/g, "EvapoTranspiration").replace(/_/g," "), // "name": the csv headers except date
       values: data.map(function(d) { // "values": which has an array of the dates and ratings
         return {
           date: d.date, 

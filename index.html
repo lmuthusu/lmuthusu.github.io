@@ -47,11 +47,7 @@
    <script type="text/javascript" src="src/leaflet-search-master/src/leaflet-search.js">
     </script>
    <link rel="stylesheet" href="src/leaflet-search-master/src/leaflet-search.css">
-   
-    <!--Insert chart here -->   
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.14.3/dist/xlsx.full.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+
     
  <!-- Load Esri Leaflet Geocoder from CDN -->
   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.css"
@@ -60,6 +56,7 @@
   <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.js"
     integrity="sha512-8twnXcrOGP3WfMvjB0jS5pNigFuIWj4ALwWEgxhZ+mxvjF5/FBPVd5uAxqT8dd2kUmTVK9+yQJ4CmTmSg/sXAQ=="
     crossorigin=""></script>
+    
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script scr="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"></script>
     <script scr="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
@@ -70,7 +67,7 @@
        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        
+    <!-- All CSS properties here but will be moved to differnt .css file-->    
         
         <style>
             
@@ -168,11 +165,11 @@
                 background-color: beige;
             }
             #Data-Numbers{
-                height: 30vh;
+                height: 45vh;
                 padding: 10px;
                 outline-style: hidden;
                 background-color: cadetblue;
-                overflow: visible;
+                overflow: scroll;
             }
             
             
@@ -249,18 +246,19 @@ body {
               <script src = "data/data_counties.json"></script>
               <script src = "data/Water_Planning_Regions.json"></script>  
               <script src = "data/new_mexico_bnd.json"></script> 
-              <script src = "data/OSE_Declared_Groundwater_Basins.json"></script>
+              <script src = "data/7_NMISC_Major_RiverBasins.json"></script>
               <script src="https://d3js.org/d3.v3.js"></script>
                    
         <!--Header-->       
         <header>
+        <img src ="src/images/xx.png" align="left"alt="logo" />
          <h1 > State Wide Water Assessment</h1>  
         </header>
         
     <div id="Spatial-Unit">
          
           <a href="#" class ="padding" onclick="myFunction2()">State</a>
-          <a href ="#" class="padding"onclick="myFunction4()"> Basins </a>
+          <a href ="#" class="padding" onclick="myFunction4()"> River Basins</a>
           <a href="#" class="padding" onclick="myFunction3()">Water Planning Regions</a>
           <a href="#" class="padding" onclick="myFunction()">Counties</a> 
           
@@ -280,15 +278,19 @@ body {
          </div>  <br>
          
          <div id = "Data-Numbers" class = row-md-6><button onclick="activateFullscreen(document.getElementById('Data-Numbers'))">Fullscreen</button>
-           Precipitation – Rain, snow, sleet, or hail that falls to the ground. Historical: Based on monthly PRISM data (Prism Climate Group, 2016) and aggregated for every MBAU. Future: Estimated from one of the four climate change models. <br>
-           Land Surface Evapotranspiration – Evapotranspiration (ET) from the land surface. Historical and Future: Because changes in water storage in the land surface stock are ignored, land surface ET is calculated by setting ET equal to precipitation less surface water runoff and recharge.
-Runoff – Precipitation that flows into the surface water system. Historical: Calculated as part of a closure term for the surface water system. Future: Calculated as a percentage of precipitation that is based on historical ratios of monthly precipitation and calculated runoff.
-Recharge – The portion of precipitation that percolates into groundwater storage. Historical: Calculated as part of a closure term for the surface water system. Future: Calculated by multiplying the future precipitation estimates by the historical based ratio of precipitation to recharge. 
-Surface Water In / Surface Water Out – Surface water flows (e.g., river) that cross the boundary of a given MBAU. Historical: Primarily based on USGS stream gage data. Future: Estimates are largely affected by the climate change models. Surface water in and outflows are dependent on geographic location, where the outflow for a given MBAU becomes the inflow for the next MBAU that is immediately downstream.
-Groundwater In / Groundwater Out  – Subsurface groundwater flow between MBAUs. Historical and Future: In the NMDSWB, groundwater flows between basins are largely unknown, and assumed to be zero at all MBAUs in order to calculate changes in groundwater storage.
-
-            
-            Data here
+          <h4> DSWB Model Parameters - An Overview </h4> <br>
+             <h6>Precipitation</h6><p>Rain, snow, sleet, or hail that falls to the ground. Historical: Based on monthly PRISM data (Prism Climate Group, 2016) and aggregated for every MBAU. Future: Estimated from one of the four climate change models.</p>
+           
+             <h6>Land Surface Evapotranspiration </h6> <p>Evapotranspiration (ET) from the land surface. Historical and Future: Because changes in water storage in the land surface stock are ignored, land surface ET is calculated by setting ET equal to precipitation less surface water runoff and recharge.</p>
+           
+             <h6>Runoff</h6> <p>Precipitation that flows into the surface water system. Historical: Calculated as part of a closure term for the surface water system. Future: Calculated as a percentage of precipitation that is based on historical ratios of monthly precipitation and calculated runoff.</p>
+             
+             <h6> Recharge</h6> <p> The portion of precipitation that percolates into groundwater storage. Historical: Calculated as part of a closure term for the surface water system. Future: Calculated by multiplying the future precipitation estimates by the historical based ratio of precipitation to recharge. </p>
+             <h6>Surface Water In / Surface Water Out </h6> <p>Surface water flows (e.g., river) that cross the boundary of a given MBAU. Historical: Primarily based on USGS stream gage data. Future: Estimates are largely affected by the climate change models. Surface water in and outflows are dependent on geographic location, where the outflow for a given MBAU becomes the inflow for the next MBAU that is immediately downstream.</p>
+             
+             <h6>Groundwater In / Groundwater Out</h6> <p>Subsurface groundwater flow between MBAUs. Historical and Future: In the NMDSWB, groundwater flows between basins are largely unknown, and assumed to be zero at all MBAUs in order to calculate changes in groundwater storage.
+             </p>
+ 
          </div>
          </div>  
           </div>

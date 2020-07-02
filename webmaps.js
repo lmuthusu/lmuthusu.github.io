@@ -85,79 +85,86 @@ document.addEventListener('fullscreenchange', (event) => {
         
              mymap.addControl(controlSearch); // add it to the map
 
-            var county_name = "Bernalillo"
+            var county_name = "Dona_Ana"
              
              var county = L.geoJSON(neighborhoods_json,{
-                 onEachFeature: function(feature, layer){
-                     layer.bindPopup(feature.properties.county_name)
-                     
-                     
+                 onEachFeature: function(feature, layer){              
                      layer.on({
-                         click: zoomToFeature,
-                         mouseover: highlightFeature,
-                         mouseout: function resetHighlight(e) {
-                            county.resetStyle(e.target);
-                             county_name = feature.properties.county_name
+                         
+                         click: function dothese(e){
+                            county_name = feature.properties.county_name
                             county_name=county_name.replace(" ","_");
                              console.log(county_name)
+                             layer.bindPopup(feature.properties.county_name)
                              myFunction()
-                            }
-                         
-                     
+                         },
+                         mouseover: highlightFeature,
+                         mouseout: function resetHighlight(e) {
+                            county.resetStyle(e.target);        
+                             
+                            }                   
                      });
-                     
-                     
-                     
-                     
-                 }
-                 
+                                          
+                 }                 
                  
              });
              
-             
+             var basin_name = "Lower_Colorado"
              var s_basins = L.geoJSON(basins, {
                  onEachFeature: function(feature, layer){
-                     layer.bindPopup(feature.properties.Basin)
+                     
+                     
+                     
                       layer.on({
-                         click: zoomToFeature,
+                         click: function dothese(e){
+                            basin_name = feature.properties.NAME
+                             basin_name = basin_name.replace(/ /g, "_");
+                             console.log(basin_name)
+                            layer.bindPopup(feature.properties.NAME)
+                             myFunction4()
+                         },
                          mouseover: highlightFeature,
                          mouseout: function resetHighlight(e) {
                             s_basins.resetStyle(e.target);
+                             
                             }
-                         
-                     
                      });
-                     
                  }
              });
              
-            var WPR_name = ""
+            var WPR_name = "Southwest"
              var wpr_NM = L.geoJSON(wpr_json,{
                  
                  onEachFeature: function(feature, layer){
                     
-                     layer.bindPopup(feature.properties.name)
+                     
                      layer.on({
-                         click: zoomToFeature,
+                         click: function dothese(e){
+                             WPR_name = feature.properties.name
+                             WPR_name = WPR_name.replace(/ /g, "_");
+                             console.log(WPR_name)
+                             layer.bindPopup(feature.properties.name)
+                             myFunction3()
+                         },
+                             
                          mouseover: highlightFeature,
                          mouseout: function resetHighlight(e) {
                             wpr_NM.resetStyle(e.target);
-                             WPR_name = feature.properties.name
-                             console.log(WPR_name)
-                             myFunction4()
+                       
                             }
-                         
-                     
                      });
                     
                  }
              });
+
+
              var new_mex_lyr = L.geoJSON(new_mex, {
                  onEachFeature: function(feature, layer){
-                     layer.bindPopup(feature.properties.NAME00)
+                     
                      layer.on('click',function(e){
                          mymap.setZoom(9)
-                         
+                         layer.bindPopup(feature.properties.NAME00)
+                         myFunction2() 
                      })
                      
                     
@@ -205,20 +212,35 @@ function myFunction2() {
 //Water Planning Regions
              
             function myFunction4() {
+                 $("#chart1").html("");
+                $("#chart2").html("");
                  mymap.removeLayer(county)
-                
+                 mymap.removeLayer(s_basins)
                  mymap.removeLayer(wpr_NM)
                  mymap.removeLayer(new_mex_lyr)
                  s_basins.addTo(mymap);
+                
+     draw("#chart1","data/Historic/RBs/"+basin_name+"_Rbasin_Historic.csv")
+    draw("#chart2","data/Historic/RBs/Uses/"+basin_name+"_Rbasin_Historic_Uses.csv", 800) 
                 }
              
            function myFunction3() {
+                $("#chart1").html("");
+                $("#chart2").html("");
                  mymap.removeLayer(county)
                  mymap.removeLayer(s_basins)
                  mymap.removeLayer(wpr_NM)
                  mymap.removeLayer(new_mex_lyr)
                  wpr_NM.addTo(mymap);
+    draw("#chart1","data/Historic/WPRs/"+WPR_name+"_WPR_Historic.csv")
+    draw("#chart2","data/Historic/WPRs/Uses/"+WPR_name+"_WPR_Historic_Uses.csv", 800)
                 }
+
+        function popupfunc(name){
+            var popup = L.popup()
+            .setContent(name)
+            .openOn(mymap);
+        }
              
            
              
