@@ -133,7 +133,12 @@ document.addEventListener('fullscreenchange', (event) => {
                              basin_name = basin_name.replace(/ /g, "_");
                              console.log(basin_name)
                             layer.bindPopup(feature.properties.NAME)
+                             if ($("#selectbox :selected").val() == "_1"){
                              myFunction4()
+                             }
+                             else{
+                                 myFunction4_Future()
+                             }
                          },
                          mouseover: highlightFeature,
                          mouseout: function resetHighlight(e) {
@@ -157,7 +162,12 @@ document.addEventListener('fullscreenchange', (event) => {
                              WPR_name = WPR_name.replace(/ /g, "_");
                              console.log(WPR_name)
                              layer.bindPopup(feature.properties.name)
+                              if ($("#selectbox :selected").val() == "_1"){
                              myFunction3()
+                             }
+                             else{
+                                 myFunction_Future3()
+                             }
                          },
                              
                          mouseover: highlightFeature,
@@ -257,13 +267,13 @@ $('#PopGrowthRate').change(function(){
     myFunction2_Future()
     }
     if(layerRef=="County"){
-    myFunction2_Future()
+    myFunction_Future()
     }
     if(layerRef=="Basin"){
-    myFunction2_Future()
+    myFunction4_Future()
     }
     if(layerRef=="WPR"){
-    myFunction2_Future()
+    myFunction3_Future()
     }
 })
 
@@ -320,7 +330,7 @@ function onChangeFunc(){
     
                             // For Future and WPR layer on
                             else if (($("#selectbox :selected").val() == "_2") && (layerRef=="WPR")){
-                             myFunction3()
+                             myFunction3_Future()
                              enable()
                             }
     
@@ -472,18 +482,22 @@ function myFunction2_Future() {
     draw("#chart2","data/Historic/WPRs/Uses/"+WPR_name+"_WPR_Historic_Uses.csv", 800)
                 }
 //Water Planning Regions Future
-function myFunction3() {
+function myFunction3_Future() {
                
                layerRef = "WPR";
-               $('#selectbox').val( "_1");
+               $('#selectbox').val( "_2");
                 $("#chart1").html("");
                 $("#chart2").html("");
 
                
     $("#field_name").html(WPR_name.replace(/_/g," ")); 
     $("#field_name1").html(WPR_name.replace(/_/g," "));
-    draw("#chart1","data/Historic/WPRs/"+WPR_name+"_WPR_Historic.csv")
-    draw("#chart2","data/Historic/WPRs/Uses/"+WPR_name+"_WPR_Historic_Uses.csv", 800)
+   var WPR_csv = "_WPR"+$("#ClimateModel :selected").val()+$("#Efficiency :selected").val()
+     + $("#PopGrowthRate :selected").val()+$("#AgLand :selected").val()
+     console.log(WPR_csv);   
+    
+    draw("#chart1","data/Future/WPRs/"+WPR_name+WPR_csv+".csv")
+
                 }
 
         function popupfunc(name){
