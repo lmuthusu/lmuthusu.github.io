@@ -90,7 +90,7 @@ d3.csv(url, function(error, data) {
   var categories = color.domain().map(function(name) { // Nest the data into an array of objects with new keys
 
     return {
-      name: name.replace(/SW_R/g, "SurfaceWater Returns").replace(/SW_D/g, "SurfaceWater Diversion").replace(/GW_D/g, "GroundWater Diversion").replace(/SW_W/g, "SurfaceWater").replace(/GW_W/g, "GroundWater").replace(/SW/g, "SurfaceWater").replace(/GW/g, "GroundWater").replace(/ET/g, "EvapoTranspiration").replace(/_/g," "), // "name": the csv headers except date
+      name: name.replace(/SW_/g, "SurfaceWater ").replace(/SW_/g, "SurfaceWater ").replace(/GW_/g, "GroundWater ").replace(/SW_W/g, "SurfaceWater").replace(/GW_W/g, "GroundWater").replace(/SW/g, "SurfaceWater").replace(/GW/g, "GroundWater").replace(/ET/g, "EvapoTranspiration").replace(/_/g," "), // "name": the csv headers except date
       values: data.map(function(d) { // "values": which has an array of the dates and ratings
         return {
           date: d.date, 
@@ -266,7 +266,7 @@ d3.csv(url, function(error, data) {
                   .slice(1); //remove the first column name (`date`);
 
   var focus = issue.select("g") // create group elements to house tooltip text
-      .data(columnNames) // bind each column name date to each g element
+      .data(color.domain()) // bind each column name date to each g element
     .enter().append("g") //create one <g> for each columnName
       .attr("class", "focus"); 
 
@@ -301,7 +301,7 @@ d3.csv(url, function(error, data) {
       d3.select("#hover-line") // select hover-line and changing attributes to mouse position
           .attr("x1", mouse_x) 
           .attr("x2", mouse_x)
-          .style("opacity", 1e-6); // Making line visible
+          .style("opacity", 1); // Making line visible
 
       // Legend tooltips // http://www.d3noob.org/2014/07/my-favourite-tooltip-method-for-line.html
 
