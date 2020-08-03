@@ -90,7 +90,7 @@ d3.csv(url, function(error, data) {
   var categories = color.domain().map(function(name) { // Nest the data into an array of objects with new keys
 
     return {
-      name: name.replace(/SW_/g, "SurfaceWater ").replace(/SW_/g, "SurfaceWater ").replace(/GW_/g, "GroundWater ").replace(/SW_W/g, "SurfaceWater").replace(/GW_W/g, "GroundWater").replace(/SW/g, "SurfaceWater").replace(/GW/g, "GroundWater").replace(/ET/g, "EvapoTranspiration").replace(/_/g," "), // "name": the csv headers except date
+      name: name.replace(/SW_W_/g, "SurfaceWater ").replace(/GW_W_/g, "GroundWater ").replace(/SW_/g, "SurfaceWater ").replace(/SW_/g, "SurfaceWater ").replace(/GW_/g, "GroundWater ").replace(/SW_W/g, "SurfaceWater").replace(/GW_W/g, "GroundWater").replace(/SW/g, "SurfaceWater").replace(/GW/g, "GroundWater").replace(/ET/g, "EvapoTranspiration").replace(/_/g," "), // "name": the csv headers except date
       values: data.map(function(d) { // "values": which has an array of the dates and ratings
         return {
           date: d.date, 
@@ -156,7 +156,7 @@ d3.csv(url, function(error, data) {
       .attr("x", -10)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Y-values (See Legend for Unit)");
+      .text("10^3 Acre Feet / Month");
 
   var issue = svg.selectAll(".issue")
       .data(categories) // Select nested data and append to new svg group elements
@@ -239,7 +239,7 @@ d3.csv(url, function(error, data) {
       
   issue.append("text")
       .attr("x", width + (margin.right/3)) 
-      .attr("y", function (d, i) { return (legendSpace)+i*(legendSpace); })  // (return (11.25/2 =) 5.625) + i * (5.625) 
+      .attr("y", function (d, i) { return (legendSpace)+i*(legendSpace) - 8; })  // (return (11.25/2 =) 5.625) + i * (5.625) 
       .text(function(d) { return d.name; }); 
 
   // Hover line 
@@ -273,7 +273,7 @@ d3.csv(url, function(error, data) {
   focus.append("text") // http://stackoverflow.com/questions/22064083/d3-js-multi-series-chart-with-y-value-tracking
         .attr("class", "tooltip")
         .attr("x", width + 20) // position tooltips  
-        .attr("y", function (d, i) { return (legendSpace)+i*(legendSpace); }); // (return (11.25/2 =) 5.625) + i * (5.625) // position tooltips       
+        .attr("y", function (d, i) { return (legendSpace+10)+i*(legendSpace) -8; }); // (return (11.25/2 =) 5.625) + i * (5.625) // position tooltips       
 
   // Add mouseover events for hover line.
   d3.select("#mouse-tracker") // select chart plot background rect #mouse-tracker

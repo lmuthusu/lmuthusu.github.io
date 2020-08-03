@@ -32,17 +32,22 @@ document.addEventListener('fullscreenchange', (event) => {
   }
 });
 
+           
              
              var mapboxUrl= 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibG11dGh1c3UiLCJhIjoiY2s5OWxrcDFjMXRoZjNpbXlvcnRidnV4aCJ9.k6iha7ExlfFxu9pNG7XwtA'
              var mapboxAttribution = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
              var grayscale = L.tileLayer(mapboxUrl, {id: "mapbox/dark-v9", tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution}),
              streets   = L.tileLayer(mapboxUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution});
              satLayer =  L.tileLayer(mapboxUrl, {id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mapboxAttribution});
-             
+
+
+            // SWEREF99 TM (EPSG:3006) with map's pixel origin at SWEREF99 TM coordinate (0, 0)
+    
              var mymap = L.map('mapid',{center:[ 32.326595,-106.775436],
                                         zoom:11,
                                     
-                                        layers:[grayscale,streets]
+                                        layers:[grayscale,streets],
+                                        
                                        });
              var basemaps = {
                             "Grayscale": grayscale,
@@ -73,7 +78,8 @@ document.addEventListener('fullscreenchange', (event) => {
                      layer.bringToFront();
                  }
                 }
-             
+
+             var testlayer = L.geoJSON(neighborhoods_json);
              
              // add the search bar to the map
             var controlSearch = new L.Control.Search({
@@ -86,6 +92,45 @@ document.addEventListener('fullscreenchange', (event) => {
             });
         
              mymap.addControl(controlSearch); // add it to the map
+
+            // create the control
+            var command = L.control({position: 'topleft'});
+
+            command.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'command1');
+
+                div.innerHTML = '<form><input id="command1" type="checkbox"/>Show Spatial Variation</form>'; 
+                return div;
+                    };
+
+                command.addTo(mymap);
+
+        document.getElementById("command1").addEventListener("click", MapShowCommand);
+
+        // add the event handler
+            function handleCommand() {
+               
+  
+                
+}
+
+
+            function MapShowCommand() {
+               if (document.getElementById('command1').checked) {
+                    $("#calc").show();
+                   L.control.timelineSlider({
+                timelineItems: ["1985", "1990", "1995", "2000", "2005", "2010", "2015","2020"],
+                extraChangeMapParams: {greeting: "Hello World!"} }).addTo(mymap);
+             
+               }
+                
+            else {
+                    $('#calc').hide()
+             
+               }
+  
+                //set flag
+}
 
             //Adding County layer       
             var county_name = "Dona_Ana"
@@ -148,6 +193,8 @@ document.addEventListener('fullscreenchange', (event) => {
                      });
                  }
              });
+
+
              
             // Add Water Planning Regions here
             var WPR_name = "Southwest"
@@ -200,6 +247,13 @@ document.addEventListener('fullscreenchange', (event) => {
                     
                  }
              });
+
+
+// Time Slider 
+
+//Create a marker layer (in the example done via a GeoJSON FeatureCollection)
+
+
 
 //Event Change on Drop Down List Box
 
@@ -340,6 +394,7 @@ function onChangeFunc(){
                                 $("#chart2").html("");
                                 
                                 }
+    
 }
 
 

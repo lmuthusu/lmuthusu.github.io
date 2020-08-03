@@ -25,7 +25,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
  
- 
+
 <!-- Load Leaflet MarkerCluster and Esri Leaflet Cluster from CDN -->
   <link rel="stylesheet" type="text/css"
     href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
@@ -47,6 +47,8 @@
    <script type="text/javascript" src="src/leaflet-search-master/src/leaflet-search.js">
     </script>
    <link rel="stylesheet" href="src/leaflet-search-master/src/leaflet-search.css">
+    <script type="text/javascript" src="/src/slider-master-timeline/leaflet-timeline-slider-master/src/leaflet-timeline-slider.js"></script>
+   
 
     
  <!-- Load Esri Leaflet Geocoder from CDN -->
@@ -57,11 +59,15 @@
     integrity="sha512-8twnXcrOGP3WfMvjB0jS5pNigFuIWj4ALwWEgxhZ+mxvjF5/FBPVd5uAxqT8dd2kUmTVK9+yQJ4CmTmSg/sXAQ=="
     crossorigin=""></script>
         
+ 
+        
     
-
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+   
+  
     <script scr="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"></script>
     <script scr="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    
+        
     
    
      
@@ -147,7 +153,19 @@
         height: 100%;
       }
             
+             #calc{
+            position:absolute;
+            bottom: 1px;
+            right:710px;
+            z-index: 1000;
+            background: #0f2044;
+            width: 200px;
+            height: 300px;
+            padding: 1em;
+            color: aliceblue;
+            opacity: 0.5;
             
+        } 
             
 
             #graph{
@@ -256,15 +274,29 @@ body {
         </header>
         
     <div id="Spatial-Unit">
-         
           <a href="#" class ="padding" onclick="myFunction2()">State</a>
           <a href ="#" class="padding" onclick="myFunction4()"> River Basins</a>
           <a href="#" class="padding" onclick="myFunction3()">Water Planning Regions</a>
           <a href="#" class="padding" onclick="myFunction()">Counties</a> 
-          
+          <!-- <input type="text" placeholder="Search.."> -->
              </div>
+               
+
     <div class="row">
      <div id ="mapid" class="col-md-6"></div>
+        
+    <!-- Leaflet Bar Contents calc -->      
+        <div id ="calc" class="leaflet-bar" style="display:none"> 
+            <label> Legend Spatial Variation (in acres) </label><br>
+            <input type="radio" id="male" name="parameter" value="precip">
+            <label for="male">Precipitation</label><br>
+            <input type="radio" id="female" name="parameter" value="runoff">
+            <label for="female">Runoff</label><br>
+            <input type="radio" id="other" name="parameter" value="surfTemp">
+            <label for="other">Surface Temperature</label>
+          
+          
+        </div>
      <div id = "dataviz" class ="col-md-6">
          <div id = "graph" class = "row-md-16"><button onclick="activateFullscreen(document.getElementById('graph'))">Fullscreen</button>
              <select id="selectbox"> 
